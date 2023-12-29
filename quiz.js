@@ -42,11 +42,35 @@ const questions = [
         const nextButton = document.getElementById("next-btn");
         const timeCounter=document.getElementById("timer")
         var timer;
-        var ele =document.getElementById("timer")
+        var ele =document.getElementById("timer");
+        let sec=29;
 
         let currentQuestionIndex = 0;
         let score = 0;
-
+        function randomDelay() {
+            const randomTime = Math.floor(Math.random() * (25 - 5 + 1)) + 5;
+            console.log(`Random time: ${randomTime} seconds`);   
+            setTimeout(function () {
+              openPopup();
+            }, randomTime * 1000);
+          }
+          function openPopup() {
+            const randomPosition = (Math.random() < 0.5)
+              ? Math.floor(Math.random() * (20 - 5 + 1)) + 1
+              : Math.floor(Math.random() * (95 - 75 + 1)) + 75;  
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById("popup").style.top = randomPosition + "%";
+            document.getElementById("popup").style.left = randomPosition + "%";
+            setTimeout(closePopup, 2000);
+          }
+          function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+          }     
+        randomDelay(openPopup);
+        function addtime(){
+            sec+=5;
+            document.getElementById('popup').style.display = 'none';
+        }
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
@@ -101,8 +125,9 @@ const questions = [
             nextButton.innerHTML = "play again"
             nextButton.style.display = "block"
         }
+        
         function handleTimer() {
-            var sec = 29;
+            sec = 29;
             ele.innerHTML ='time left: '+ (sec+1)
             timer = setInterval( ()=> {
                 if(sec>=0){
