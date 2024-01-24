@@ -5,7 +5,10 @@
     box-sizing: border-box;
 }
 body{
-    background: #001e4d;
+    background-image: url("quizz.avif");
+    background-repeat: no-repeat;
+    background-size: 1550px;
+    background-attachment: fixed;
 }
 #popup {
     display: none;
@@ -26,8 +29,8 @@ body{
 }
 #popup img{
     position: absolute;
-    top: -0.5px;
-    left: -0.5px;
+    top: -0.45px;
+    left: -0.45px;
     border-radius: 50%;
 }
 

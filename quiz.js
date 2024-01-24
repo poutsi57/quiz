@@ -34,6 +34,25 @@ const questions = [
             {text:"something else", correct:'true'},
             {text:"there is no difference", correct:'false'}
         ]
+    },
+    {
+        question:"Which city is considered the birthplace of the Renaissance?",
+        answers:[
+            {text:"Venice", correct:'false'},
+            {text:"Florence", correct:'true'},
+            {text:"Rome", correct:'false'},
+            {text:"Milan", correct:'false'}
+        ]
+    },
+    {
+        question:"What is the name of the genre characterized by its origins in the African American communities of New Orleans, Louisiana, and is often associated with brass and percussion instruments?"
+        ,
+        answers:[
+            {text:"pop", correct:'false'},
+            {text:"rock n roll", correct:'false'},
+            {text:"jazz", correct:'true'},
+            {text:"hiphop", correct:'false'}
+        ]
     }
 ];
 
@@ -79,7 +98,9 @@ const questions = [
         }
 
         function showQuestion() {
+            randomDelay();
             resetState();
+            handleTimer();
             let currentQuestion = questions[currentQuestionIndex];
             let questionNo = currentQuestionIndex + 1;
             questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
@@ -88,11 +109,11 @@ const questions = [
                 button.innerHTML = answer.text;
                 button.classList.add("btn");
                 answerButtons.appendChild(button);
-                if(answer.correct){
-                    button.dataset.correct=answer.correct;
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
                 }
-                button.addEventListener("click",selectAnswer)
-            })
+                button.addEventListener("click", selectAnswer);
+            });
         }
         function resetState() {
             nextButton.style.display="none";
@@ -101,6 +122,7 @@ const questions = [
             }
         }
         function selectAnswer(e) {
+            closePopup();
             const selectedBtn = e.target;
             const isCorrect = selectedBtn.dataset.correct === "true";
             if(isCorrect){
@@ -119,11 +141,13 @@ const questions = [
             nextButton.style.display="block";
         }
         function showScore() {
+            closePopup();
             resetState();
             timeCounter.innerHTML=""
             questionElement.innerHTML = `you scored ${score} out of ${questions.length}!`
             nextButton.innerHTML = "play again"
             nextButton.style.display = "block"
+            
         }
         
         function handleTimer() {
@@ -142,19 +166,18 @@ const questions = [
                     });
                     nextButton.style.display="block";
                 }
-                sec--; 
+                sec=sec-1; 
             },1000)
         }
         function handleNextButton() {
+            clearInterval(timer);
             currentQuestionIndex++;
-            if(currentQuestionIndex < questions.length){
-                timeCounter.innerHTML="30"
-                handleTimer();
+            if (currentQuestionIndex < questions.length) {
+                timeCounter.innerHTML = "30";
                 showQuestion();
-            }else{
+            } else {
                 showScore();
             }
-            
         }
         nextButton.addEventListener("click",() =>{
             if(currentQuestionIndex < questions.length){
@@ -164,4 +187,3 @@ const questions = [
             }
         })
         startQuiz();
-        handleTimer();
